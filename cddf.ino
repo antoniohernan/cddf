@@ -139,7 +139,7 @@ void loop()
         delay(1200);
         lcd.setCursor(0,0);
         lcd.write(byte(3));
-        lcd.print("2020 DarkSystem");
+        lcd.print("2020 DarkSystems");
         lcd.setCursor(0,1);
         lcd.print("Por ISAAC y POPA");
         break;

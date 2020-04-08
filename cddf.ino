@@ -1,10 +1,10 @@
-/*-----( Import needed libraries )-----*/
+/* Carga de Librerias de LCD y otras */
 #include <LiquidCrystal.h>
 
-/*-----( Declare objects )-----*/
-LiquidCrystal lcd(8, 9, 4, 5, 6, 7); //These are the pins used on this shield
+/* Pins de nuestra LCD               */
+LiquidCrystal lcd(8, 9, 4, 5, 6, 7); 
 
-/*-----( Declare Constants )-----*/
+/* Declaracion de Constantes         */
 #define btnRIGHT  0
 #define btnUP     1
 #define btnDOWN   2
@@ -12,20 +12,30 @@ LiquidCrystal lcd(8, 9, 4, 5, 6, 7); //These are the pins used on this shield
 #define btnSELECT 4
 #define btnNONE   5
 
-/*-----( Declare Variables )-----*/
+/* Valores de los botones de lcd keypad shiel por A0 */
+#define btnNONEvalue   1000
+#define btnRIGHTvalue  0
+#define btnUPvalue     133
+#define btnDOWNvalue   310
+#define btnLEFTvalue   482
+#define btnSELECTvalue 724
+
+#define BACKLIGHTPIN   10    //D10 pin de backlight
+
+/* Declaracion de Variables          */
 int lcd_key       = 0;
-int adc_key_in0   = 0;
+int adc_key_in    = 0;
 
-int meses = 0;
-int dias = 0;
-int horas = 0;
-int minutos = 0;
-int segundos = 0;
-int flipflop = 0;
-int incidentes = 0;
+int meses         = 0;
+int dias          = 0;
+int horas         = 0;
+int minutos       = 0;
+int segundos      = 0;
+int flipflop      = 0;
+int incidentes    = 0;
 
-// Imagen de Pacman
-byte pacman[8] = {
+/* Images de bytes                   */
+byte pacman[8] = {            //Pacman
   B00000,
   B00000,
   B01110,
@@ -36,8 +46,7 @@ byte pacman[8] = {
   B00000
 };
 
-// Imagen Fantasma
-byte fantasma[8] = {
+byte fantasma[8] = {         // Fantasma
   B00000,
   B00000,
   B01110,
@@ -48,7 +57,7 @@ byte fantasma[8] = {
   B00000
 };
 
-byte reloj[8] = {
+byte reloj[8] = {            // Reloj
   B00000,
   B01110,
   B10101,
@@ -59,7 +68,7 @@ byte reloj[8] = {
   B00000
 };
 
-byte C[8] = {
+byte C[8] = {                //© Copy
   B00000,
   B00000,
   B11100,
@@ -70,15 +79,24 @@ byte C[8] = {
   B00000
 };
 
-void setup()   /*----( SETUP: RUNS ONCE )----*/
+/* SETUP Se ejecuta al inicio 1 vez  */
+void setup()   
 {
-  lcd.begin(16, 2);              // start the lcd object
-  //Print Initial Messages
+  lcd.begin(16, 2);                  // Inicializamos la LCD
+
+  /* Mensaje de inicio en pantalla     */
   lcd.setCursor(0,0);
-  lcd.print("S.D.C.A. Sistema");
+  lcd.print("C.d.D.F. Control");
   lcd.setCursor(0,1);
-  lcd.print("Ctrl Accidentes");
-  lcd.createChar(0, pacman);
+  lcd.print("  de Desastres  ");
+  delay(1000);
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("  de Desastres  "); 
+  lcd.setCursor(0,1);
+  lcd.print("   Familiares   "); 
+
+  lcd.createChar(0, pacman);         // Generacion de mapas de caracteres
   lcd.createChar(1,fantasma);
   lcd.createChar(2,reloj);
   lcd.createChar(3,C);
@@ -86,35 +104,37 @@ void setup()   /*----( SETUP: RUNS ONCE )----*/
   delay(2000);
   lcd.clear();
   
-}/*--(end setup )---*/
+}  // Fin SETUP 
 
-void loop()   /*----( LOOP: RUNS CONSTANTLY )----*/
+
+/* LOOP Se ejecuta constantemente    */
+void loop()   
 {    
-    lcd_key = read_LCD_buttons(); 
+    lcd_key = read_LCD_buttons();    // Leeemos si hay algun boton pulsado
     switch (lcd_key)               
     {
-     case btnNONE:
+     case btnNONE:                  // No hay boton
       {
         lcd.setCursor(0,0);
         lcd.write(byte(2));
-        lcd.print(" Sin Accidentes ");
+        lcd.print(" Sin Desastres  ");
         break;
       }
-     case btnSELECT:
+     case btnSELECT:               // Boton Select -> Muestra el contador de Desastres
       {
         lcd.setCursor(0,0);
         lcd.print("                ");
         lcd.setCursor(0,0);
-        lcd.print(String("Incidentes: ") + String(incidentes) + String(" "));
+        lcd.print(String("Desastres: ") + String(incidentes) + String("  "));
         lcd.write(byte(1));
         break;
       }
-     case btnRIGHT:
+     case btnRIGHT:                 // Boton Derecha -> Muestra el © Copy
       {
         lcd.setCursor(0,0);
-        lcd.print("S.D.C.A. Sistema");
+        lcd.print("C.d.D.F. Control");
         lcd.setCursor(0,1);
-        lcd.print("Ctrl Accidentes");
+        lcd.print(" Desastres Fam. ");
         delay(1200);
         lcd.setCursor(0,0);
         lcd.write(byte(3));
@@ -123,12 +143,12 @@ void loop()   /*----( LOOP: RUNS CONSTANTLY )----*/
         lcd.print("Por ISAAC y POPA");
         break;
       }
-     case btnUP:
+     case btnLEFT:                   // Boton Izquierda  -> Incrementa Desastres y reincia contadores
       {
         lcd.setCursor(0,0);
         lcd.print("                ");
         lcd.setCursor(0,0);
-        lcd.print("Nuevo Accidente");
+        lcd.print("Nuevo Desastre ");
         lcd.write(byte(1));
         incidentes++;
         meses = 0;
@@ -139,8 +159,19 @@ void loop()   /*----( LOOP: RUNS CONSTANTLY )----*/
         delay(3000);
         break;
       }
+      case btnUP:                      // Boton Arriba -> Enciende backlight
+      {
+        backlightOn();
+        break;
+      }
+      case btnDOWN:                    // Boton Abajo -> Apaga backlight
+      {
+        backlightOff();
+        break;
+      }
     }   
-    
+
+    // Incremento de tiempo
     delay(1000);
     segundos++;
   
@@ -163,7 +194,7 @@ void loop()   /*----( LOOP: RUNS CONSTANTLY )----*/
       meses++;
     }
         
-    //Print Time
+    // Pintamos el tiempo
     lcd.setCursor(0,1);
     
     if(meses < 10){
@@ -210,20 +241,32 @@ void loop()   /*----( LOOP: RUNS CONSTANTLY )----*/
       flipflop=0;
     }
 
-}/* --(end main loop )-- */
+} // Fin LOOP
 
-
-//get which button is pressed
+/* Lectura de botones pulsados       */
 int read_LCD_buttons()
 {
-  adc_key_in0 = analogRead(0);      // read the value from the sensor
-  // my buttons when read are centered at these valies: 0, 144, 329, 504, 741
-  // we add approx 50 to those values and check to see if we are close
-  if (adc_key_in0 > 1000) return btnNONE; // We make this the 1st option for speed reasons since it will be the most likely result
-  if (adc_key_in0 == 0  )  return btnRIGHT;
-  if (adc_key_in0 == 133)  return btnUP;
-  if (adc_key_in0 == 310)  return btnDOWN;
-  if (adc_key_in0 == 482)  return btnLEFT;
-  if (adc_key_in0 == 724)  return btnSELECT;
-  return btnNONE;  // when all others fail, return this...
+  adc_key_in = analogRead(0);        // Lectura del sensor
+  // los valores de nuestro lcd keypad shield son: 0, 133, 310, 482, 724
+  if ( adc_key_in >  btnNONEvalue )   return btnNONE; 
+  if ( adc_key_in == btnRIGHTvalue  ) return btnRIGHT;
+  if ( adc_key_in == btnUPvalue )     return btnUP;
+  if ( adc_key_in == btnDOWNvalue )   return btnDOWN;
+  if ( adc_key_in == btnLEFTvalue )   return btnLEFT;
+  if ( adc_key_in == btnSELECTvalue ) return btnSELECT;
+  return btnNONE;
+}
+
+/* Apagado de retroiluminacion       */
+void backlightOff()
+{
+  digitalWrite(BACKLIGHTPIN, LOW);
+  pinMode(BACKLIGHTPIN, OUTPUT);
+}
+
+/* Encendido  de retroiluminacion     */
+void backlightOn()
+{
+  digitalWrite(BACKLIGHTPIN, LOW);
+  pinMode(BACKLIGHTPIN, INPUT);
 }

@@ -29,6 +29,16 @@ En este caso queríamos duplicarlo los botones de la shield en la parte superior
 
 Ver [ccdf.ino](https://github.com/antoniohernan/cddf/blob/master/cddf.ino)
 
+## Botones
+
+El uso programado de los botones es:
+
+- Amarillo (UP) Enciende la retroiluminación de la pantalla
+- Azul (DOWN) Apaga la retroiluminación de la pantalla
+- Verde (LEFT) Muestra el ©Copyright
+- Rojo (RIGHT) Añade un nuevo incidente/desastre y reinicia los contadores
+- Azul (SELECT) Muestra el contador de los desastres actuales.
+
 ## Futuras mejoras
 
 La cuenta del reloj tiene a retrasarse, esto es, en 24h puede acumular unos 10 minutos de retraso.

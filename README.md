@@ -17,7 +17,7 @@ Así que, usando el [Reloj de Guerra de Pacific Rim](https://pacificrim.fandom.c
 - Cables varios
 - A falta de impresora 3D, cartón para hacer la caja (hemos usado cartón de 2mm de grosor)
 
-![piezas por todas partes](./images/IMG_E2008.JPG)
+![piezas por todas partes](./images/IMG_E2008.jpg)
 
 
 ## Ensamblaje
@@ -47,4 +47,4 @@ El problema es que la función millis() tiene la manía de sufrir un overflow ca
 
 Y así queda con esta sencilla a la par que elegante caja de cartón:
 
-![piezas por todas partes](./images/IMG_2016.JPG)
+![piezas por todas partes](./images/IMG_2016.jpg)

@@ -19,6 +19,7 @@ Así que, usando el Reloj de Guerra de Pacific Rim como inspiración ![https://p
 
 ## Ensamblaje
 
+
 ## Codigo
 
 ## Futuras mejoras

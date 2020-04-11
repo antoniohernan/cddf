@@ -53,6 +53,8 @@ Este método es fácil, es fiable, pero no de ser una "ñapa" que no sa nunca un
 Esto nos dará una precisión mucho mayor, del 98-100%, si bien no es un cambio tan rápido ni fácil.
 El problema es que la función millis() tiene la manía de sufrir un overflow cada 50 días aproximadamente, lo que será el máximo de tiempo que podríamos usar nuestra Arduino de contunio usando esta solución
 
+**C)** Añadir al contador un Real time clock: DS3231 con batería, y se consigue solucionar todo, la imprecisión en los contadores, y la posibilidad de pérdida de corriente en el circuito.
+
 ## Caja
 
 Y así queda con esta sencilla a la par que elegante caja de cartón:

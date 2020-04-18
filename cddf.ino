@@ -99,6 +99,28 @@ byte hora[8] = {            //horas
   B00000
 };
 
+byte minuto[8] = {          //minutos
+  B11000,
+  B01000,
+  B10000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000
+};
+
+byte segundo[8] = {          //segundos
+  B11011,
+  B01001,
+  B10010,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000
+};
+
 
 /* SETUP Se ejecuta al inicio UNA vez                            */
 void setup()
@@ -123,7 +145,9 @@ void setup()
   lcd.createChar(3,C);
   lcd.createChar(4,dia);
   lcd.createChar(5,hora);
-
+  lcd.createChar(6,minuto);
+  lcd.createChar(7,segundo);
+  
   delay(2000);
   lcd.clear();
 
@@ -215,7 +239,6 @@ void loop()
 
     // DIAS
     lcd.write(byte(4));
-    //lcd.setCursor(1,1);
     if(dias < 100) { lcd.print("0"); }
     if(dias < 10)  { lcd.print("0"); }
     lcd.print(dias);
@@ -224,7 +247,6 @@ void loop()
     lcd.write(byte(0));
 
     // HORAS
-    //lcd.setCursor(5,1);
     lcd.write(byte(5));
     if(horas < 10) { lcd.print("0"); }
     lcd.print(horas);
@@ -233,8 +255,7 @@ void loop()
     lcd.write(byte(0));
 
     // MINUTOS
-    //lcd.setCursor(9,1);
-    lcd.print("'");
+    lcd.write(byte(6));
     if(minutos < 10){ lcd.print("0"); }
     lcd.print(minutos);
 
@@ -242,8 +263,7 @@ void loop()
     lcd.write(byte(0));
 
     // SEGUNDOS
-    //lcd.setCursor(12,1);
-    lcd.print("''");
+    lcd.write(byte(7));
     if(segundos < 10){ lcd.print("0"); }
     lcd.print(segundos);
 
@@ -273,6 +293,6 @@ void backlightOff()
 /* Encendido  de retroiluminacion     */
 void backlightOn()
 {
-  digitalWrite(BACKLIGHTPIN, LOW);
+  digitalWrite(BACKLIGHTPIN, HIGH);
   pinMode(BACKLIGHTPIN, OUTPUT);
 }

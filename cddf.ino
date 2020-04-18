@@ -27,23 +27,20 @@ LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 int lcd_key       = 0;
 int adc_key_in    = 0;
 
-int meses         = 0;
-int dias          = 0;
+int dias          = 1;      // Ajuste inicial
 int horas         = 0;
 int minutos       = 0;
 int segundos      = 0;
-int flipflop      = 0;
-int incidentes    = 0;
+int incidentes    = 4;     // Ajuste inicial
 
-/* Images de bytes                                               */
-byte pacman[8] = {            //Pacman
+byte barra[8] = {         // Barra Vertical
   B00000,
-  B00000,
-  B01110,
-  B11011,
-  B11100,
-  B01110,
-  B00000,
+  B00100,
+  B00100,
+  B00100,
+  B00100,
+  B00100,
+  B00100,
   B00000
 };
 
@@ -80,6 +77,51 @@ byte C[8] = {                //© Copy
   B00000
 };
 
+byte dia[8] = {             // dias
+  B00100,
+  B00100,
+  B11100,
+  B10100,
+  B11100,
+  B00000,
+  B00000,
+  B00000
+};
+
+byte hora[8] = {            //horas
+  B10000,
+  B10000,
+  B11100,
+  B10100,
+  B10100,
+  B00000,
+  B00000,
+  B00000
+};
+
+byte minuto[8] = {          //minutos
+  B11000,
+  B01000,
+  B10000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000
+};
+
+byte segundo[8] = {          //segundos
+  B11011,
+  B01001,
+  B10010,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000
+};
+
+
 /* SETUP Se ejecuta al inicio UNA vez                            */
 void setup()
 {
@@ -97,16 +139,19 @@ void setup()
   lcd.setCursor(0,1);
   lcd.print("   Familiares   ");
 
-  lcd.createChar(0, pacman); // Generacion de mapas de caracteres
+  lcd.createChar(0,barra);   // Generacion de mapas de caracteres
   lcd.createChar(1,fantasma);
   lcd.createChar(2,reloj);
   lcd.createChar(3,C);
-
+  lcd.createChar(4,dia);
+  lcd.createChar(5,hora);
+  lcd.createChar(6,minuto);
+  lcd.createChar(7,segundo);
+  
   delay(2000);
   lcd.clear();
 
 }  // Fin SETUP
-
 
 /* LOOP Se ejecuta CONTINUAMENTE                                 */
 void loop()
@@ -152,7 +197,6 @@ void loop()
         lcd.print("Nuevo Desastre ");
         lcd.write(byte(1));
         incidentes++;
-        meses = 0;
         dias = 0;
         horas = 0;
         minutos = 0;
@@ -190,57 +234,38 @@ void loop()
       dias++;
     }
 
-    if(dias >= 30){
-      dias = 0;
-      meses++;
-    }
-
     // Pintamos el tiempo
     lcd.setCursor(0,1);
 
-    if(meses < 10){
-      lcd.print("0");
-    }
-    lcd.print(meses);
-    lcd.print(":");
-
-    lcd.setCursor(3,1);
-    if(dias < 10){
-      lcd.print("0");
-    }
+    // DIAS
+    lcd.write(byte(4));
+    if(dias < 100) { lcd.print("0"); }
+    if(dias < 10)  { lcd.print("0"); }
     lcd.print(dias);
-    lcd.print(":");
 
-    lcd.setCursor(6,1);
-    if(horas < 10){
-      lcd.print("0");
-    }
+    // Separador
+    lcd.write(byte(0));
+
+    // HORAS
+    lcd.write(byte(5));
+    if(horas < 10) { lcd.print("0"); }
     lcd.print(horas);
-    lcd.print(":");
 
-    lcd.setCursor(9,1);
-    if(minutos < 10){
-      lcd.print("0");
-    }
+    // Separador
+    lcd.write(byte(0));
+
+    // MINUTOS
+    lcd.write(byte(6));
+    if(minutos < 10){ lcd.print("0"); }
     lcd.print(minutos);
-    lcd.print(":");
 
-    lcd.setCursor(12,1);
-    if(segundos < 10){
-      lcd.print("0");
-    }
+    // Separador
+    lcd.write(byte(0));
+
+    // SEGUNDOS
+    lcd.write(byte(7));
+    if(segundos < 10){ lcd.print("0"); }
     lcd.print(segundos);
-    lcd.print(":");
-
-    lcd.setCursor(15,1);
-    if (flipflop < 1){
-      lcd.write(" ");
-      flipflop=1;
-    }
-    else {
-      lcd.write(byte(0));
-      flipflop=0;
-    }
 
 } // Fin LOOP
 
@@ -268,6 +293,6 @@ void backlightOff()
 /* Encendido  de retroiluminacion     */
 void backlightOn()
 {
-  digitalWrite(BACKLIGHTPIN, LOW);
+  digitalWrite(BACKLIGHTPIN, HIGH);
   pinMode(BACKLIGHTPIN, OUTPUT);
 }

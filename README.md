@@ -60,3 +60,10 @@ El problema es que la función millis() tiene la manía de sufrir un overflow ca
 Y así queda con esta sencilla a la par que elegante caja de cartón:
 
 ![piezas por todas partes](./images/IMG_2016.jpg)
+
+## To-do
+
+- Revisar [Reference EEProm] (https://www.arduino.cc/en/Reference/EEPROM) para poder grabar el estado en los bytes de la Eeprom y que no se pierda todo al apagar.
+
+- Revisar contador de ajuste, con 980ms nos adelantamos 5' 34'' en 24 horas.
+

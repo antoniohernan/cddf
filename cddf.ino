@@ -21,7 +21,7 @@ LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 #define btnSELECTvalue 724
 
 #define BACKLIGHTPIN   10    // D10 pin de backlight
-#define DELAYADJ      980    // Ajuste del delay
+#define DELAYADJ      985    // Ajuste del delay
 
 /* Declaracion de Variables                                      */
 int lcd_key       = 0;

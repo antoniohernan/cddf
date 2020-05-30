@@ -14,11 +14,11 @@ LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 
 /* Valores de los botones de lcd keypad shiel por A0             */
 #define btnNONEvalue   1000
-#define btnRIGHTvalue  0
-#define btnUPvalue     133
-#define btnDOWNvalue   310
-#define btnLEFTvalue   482
-#define btnSELECTvalue 724
+#define btnRIGHTvalue  0 + 10
+#define btnUPvalue     133 + 10
+#define btnDOWNvalue   310 + 10
+#define btnLEFTvalue   482 + 10
+#define btnSELECTvalue 724 + 10
 
 #define BACKLIGHTPIN   10    // D10 pin de backlight
 #define DELAYADJ      985    // Ajuste del delay
@@ -27,11 +27,11 @@ LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 int lcd_key       = 0;
 int adc_key_in    = 0;
 
-int dias          = 1;      // Ajuste inicial
+int dias          = 0;      // Ajuste inicial
 int horas         = 0;
 int minutos       = 0;
 int segundos      = 0;
-int incidentes    = 4;     // Ajuste inicial
+int incidentes    = 7;     // Ajuste inicial
 
 byte barra[8] = {         // Barra Vertical
   B00000,
@@ -147,7 +147,7 @@ void setup()
   lcd.createChar(5,hora);
   lcd.createChar(6,minuto);
   lcd.createChar(7,segundo);
-  
+
   delay(2000);
   lcd.clear();
 
@@ -216,6 +216,9 @@ void loop()
       }
     }
 
+    // Clear button
+    lcd_key = btnNONE;
+
     // Incremento de tiempo
     delay(DELAYADJ);
     segundos++;
@@ -228,7 +231,6 @@ void loop()
       minutos = 0;
       horas++;
     }
-
     if(horas >= 24){
       horas = 0;
       dias++;
@@ -275,24 +277,25 @@ int read_LCD_buttons()
   adc_key_in = analogRead(0);        // Lectura del sensor
   // los valores de nuestro lcd keypad shield son: 0, 133, 310, 482, 724
   if ( adc_key_in >  btnNONEvalue )   return btnNONE;
-  if ( adc_key_in == btnRIGHTvalue  ) return btnRIGHT;
-  if ( adc_key_in == btnUPvalue )     return btnUP;
-  if ( adc_key_in == btnDOWNvalue )   return btnDOWN;
-  if ( adc_key_in == btnLEFTvalue )   return btnLEFT;
-  if ( adc_key_in == btnSELECTvalue ) return btnSELECT;
+  if ( adc_key_in <= btnRIGHTvalue  ) return btnRIGHT;
+  if ( adc_key_in <= btnUPvalue )     return btnUP;
+  if ( adc_key_in <= btnDOWNvalue )   return btnDOWN;
+  if ( adc_key_in <= btnLEFTvalue )   return btnLEFT;
+  if ( adc_key_in <= btnSELECTvalue ) return btnSELECT;
+
   return btnNONE;
 }
 
 /* Apagado de retroiluminacion       */
 void backlightOff()
 {
-  digitalWrite(BACKLIGHTPIN, LOW);
   pinMode(BACKLIGHTPIN, OUTPUT);
+  digitalWrite(BACKLIGHTPIN, LOW);
 }
 
 /* Encendido  de retroiluminacion     */
 void backlightOn()
 {
-  digitalWrite(BACKLIGHTPIN, HIGH);
   pinMode(BACKLIGHTPIN, OUTPUT);
+  digitalWrite(BACKLIGHTPIN, HIGH);
 }

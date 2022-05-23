@@ -3,7 +3,7 @@ on:
   push:
     paths:
     - '**.ino'
-
+    - '**build.yml' 
 jobs:
   build:
     name: Compile
@@ -11,8 +11,9 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+
     - name: Compile all files
       uses: ArminJo/arduino-test-compile@v3
-     with:
-       arduino-board_fqbn: arduino:avr:uno
-       required-libraries: LiquidCrystal
+      with:
+        arduino-board_fqbn: arduino:avr:uno
+        required-libraries: LiquidCrystal

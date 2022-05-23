@@ -1,6 +1,6 @@
 # Contador de Desastres Familiares
 
-[![Semgrep](https://github.com/antoniohernan/cddf/actions/workflows/semgrep.yml/badge.svg)](https://github.com/antoniohernan/cddf/actions/workflows/semgrep.yml)
+[![Semgrep](https://github.com/antoniohernan/cddf/actions/workflows/semgrep.yml/badge.svg)](https://github.com/antoniohernan/cddf/actions/workflows/semgrep.yml) [![Build](https://github.com/antoniohernan/cddf/actions/workflows/build.yml/badge.svg)](https://github.com/antoniohernan/cddf/actions/workflows/build.yml)
 
 ## Acerca de..
 

@@ -1,5 +1,7 @@
 # Contador de Desastres Familiares
 
+[![Semgrep](https://github.com/antoniohernan/cddf/actions/workflows/semgrep.yml/badge.svg)](https://github.com/antoniohernan/cddf/actions/workflows/semgrep.yml)
+
 ## Acerca de..
 
 Este proyecto surge durante los meses de Marzo/Abrirl de 2020, en pleno confinamiento por COVID-19.
